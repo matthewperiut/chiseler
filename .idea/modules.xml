@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/chiselmachine.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/chiselmachine.common.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/chiselmachine.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/common/chiselmachine.common.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/chiselmachine.common.test.iml" filepath="$PROJECT_DIR$/.idea/modules/common/chiselmachine.common.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/chiselmachine.fabric.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/chiselmachine.fabric.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/chiselmachine.fabric.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/chiselmachine.fabric.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/chiselmachine.fabric.test.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/chiselmachine.fabric.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/neoforge/chiselmachine.neoforge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/neoforge/chiselmachine.neoforge.main.iml" />

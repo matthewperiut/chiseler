@@ -32,10 +32,10 @@ public final class ChiselMachineFabric implements ModInitializer {
             Registry.register(Registries.BLOCK_ENTITY_TYPE, CHISELER_ID, FabricBlockEntityTypeBuilder.<ChiselerBlockEntity>create(ChiselerBlockEntity::new, ChiselMachineBlocks.CHISELER).build());;
 
 
-    public static final ScreenHandlerType<ChiselerScreenHandler> CHISELER_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(ChiselerScreenHandler::new, PacketCodecs.);
-    Registries
+    public static final ScreenHandlerType<ChiselerScreenHandler> CHISELER_SCREEN_HANDLER = new ScreenHandlerType<>(ChiselerScreenHandler::new, FeatureSet.empty());
     @Override
     public void onInitialize() {
         ChiselMachine.init();
+        Registry.register(Registries.SCREEN_HANDLER, CHISELER_ID, CHISELER_SCREEN_HANDLER);
     }
 }

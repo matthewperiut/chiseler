@@ -1,22 +1,30 @@
 package com.periut.chiselmachine;
 
+import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.FurnaceBlockEntity;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.FurnaceScreenHandler;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Iterator;
 
 public class ChiselerBlockEntity extends LockableContainerBlockEntity implements NamedScreenHandlerFactory, SidedInventory {
     protected DefaultedList<ItemStack> inventory;
@@ -25,24 +33,6 @@ public class ChiselerBlockEntity extends LockableContainerBlockEntity implements
         super(Registries.BLOCK_ENTITY_TYPE.get(ChiselMachine.CHISELER_ID), pos, state);
         this.inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
     }
-
-    private int clicks = 0;
-    public int getClicks() {
-        return clicks;
-    }
-
-    public void incrementClicks() {
-        clicks++;
-        markDirty();
-    }
-
-    @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        nbt.putInt("clicks", clicks);
-
-        super.writeNbt(nbt, registryLookup);
-    }
-
 
     @Override
     public int[] getAvailableSlots(Direction side) {
@@ -87,5 +77,19 @@ public class ChiselerBlockEntity extends LockableContainerBlockEntity implements
     @Override
     public int size() {
         return 3;
+    }
+
+    @Override
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
+        this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
+        Inventories.readNbt(nbt, this.inventory, registries);
+
+    }
+
+    @Override
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
+        Inventories.writeNbt(nbt, this.inventory, registries);
     }
 }

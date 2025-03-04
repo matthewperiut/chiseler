@@ -4,27 +4,27 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.registry.Registries;
+import net.minecraft.screen.FurnaceScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
 public class ChiselerScreenHandler extends ScreenHandler {
 
     public ChiselerScreenHandler(int syncId, PlayerInventory playerInventory) {
-        super(Registries.SCREEN_HANDLER.get(ChiselMachine.CHISELER_ID), syncId);
+        this(syncId, playerInventory, new SimpleInventory(3)); // Create an empty inventory with 3 slots
     }
+
 
     public ChiselerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
         super(Registries.SCREEN_HANDLER.get(ChiselMachine.CHISELER_ID), syncId);
-        this.addSlot(new Slot(inventory, 0, 56, 17));
-        this.addSlot(new Slot(inventory, 1, 56, 53));
+        this.addSlot(new Slot(inventory, 0, 54, 35));
+        this.addSlot(new Slot(inventory, 1, 83, 59));
         this.addSlot(new Slot(inventory, 2, 116, 35));
         this.addPlayerSlots(playerInventory, 8, 84);
-    }
-
-    public ChiselerScreenHandler(int syncId, PlayerInventory inventory, Object o) {
-        super(Registries.SCREEN_HANDLER.get(ChiselMachine.CHISELER_ID), syncId);
     }
 
     @Override
