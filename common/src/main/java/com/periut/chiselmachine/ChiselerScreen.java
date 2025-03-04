@@ -47,6 +47,6 @@ public class ChiselerScreen extends HandledScreen<ChiselerScreenHandler> {
     protected void init() {
         super.init();
         // Set the title location
-        titleX = ((backgroundWidth - textRenderer.getWidth(title)) / 2) + 4;
+        titleX = ((backgroundWidth - textRenderer.getWidth(title)) / 2);
     }
 }

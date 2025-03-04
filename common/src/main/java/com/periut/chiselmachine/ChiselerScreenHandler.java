@@ -21,9 +21,9 @@ public class ChiselerScreenHandler extends ScreenHandler {
 
     public ChiselerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
         super(Registries.SCREEN_HANDLER.get(ChiselMachine.CHISELER_ID), syncId);
-        this.addSlot(new Slot(inventory, 0, 54, 35));
-        this.addSlot(new Slot(inventory, 1, 83, 59));
-        this.addSlot(new Slot(inventory, 2, 116, 35));
+        this.addSlot(new Slot(inventory, 0, 51, 35));
+        this.addSlot(new Slot(inventory, 1, 80, 59));
+        this.addSlot(new Slot(inventory, 2, 113, 35));
         this.addPlayerSlots(playerInventory, 8, 84);
     }
 
