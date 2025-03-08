@@ -1,7 +1,5 @@
 package com.periut.chiselmachine.fabric;
 
-import com.periut.chiselmachine.ChiselMachine;
-import com.periut.chiselmachine.ChiselerBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;

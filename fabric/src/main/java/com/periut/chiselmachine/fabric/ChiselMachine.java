@@ -1,9 +1,5 @@
-package com.periut.chiselmachine;
+package com.periut.chiselmachine.fabric;
 
-import net.minecraft.block.FurnaceBlock;
-import net.minecraft.block.entity.FurnaceBlockEntity;
-import net.minecraft.client.gui.screen.ingame.FurnaceScreen;
-import net.minecraft.screen.FurnaceScreenHandler;
 import net.minecraft.util.Identifier;
 
 public final class ChiselMachine {

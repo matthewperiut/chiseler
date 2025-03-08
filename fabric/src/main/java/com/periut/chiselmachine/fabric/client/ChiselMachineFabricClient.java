@@ -1,7 +1,6 @@
 package com.periut.chiselmachine.fabric.client;
 
-import com.periut.chiselmachine.ChiselMachine;
-import com.periut.chiselmachine.ChiselerScreen;
+import com.periut.chiselmachine.fabric.ChiselerScreen;
 import com.periut.chiselmachine.fabric.ChiselMachineFabric;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
