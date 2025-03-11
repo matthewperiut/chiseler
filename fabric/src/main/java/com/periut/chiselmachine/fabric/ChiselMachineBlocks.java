@@ -38,7 +38,7 @@ public class ChiselMachineBlocks {
 	public static final Block CHISELER = register(
 			"chiseler",
 			ChiselerBlock::new,
-			AbstractBlock.Settings.create(),
+			AbstractBlock.Settings.create().hardness(3.F).resistance(3.F),
 			true
 	);
 }

@@ -45,28 +45,28 @@ public class ChiselerScreenHandler extends ScreenHandler {
     @Override
     public ItemStack quickMove(PlayerEntity player, int slotId) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = (Slot)this.slots.get(slotId);
+        Slot slot = this.slots.get(slotId);
+
         if (slot != null && slot.hasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
+
             if (slotId == 2) {
+                // Move items from slot 2 to player inventory (3-39)
                 if (!this.insertItem(itemstack1, 3, 39, true)) {
                     return ItemStack.EMPTY;
                 }
-
                 slot.onQuickTransfer(itemstack1, itemstack);
-            } else if (slotId != 1 && slotId != 0) {
-                if (!this.insertItem(itemstack1, 0, 1, false)) {
-                    return ItemStack.EMPTY;
-                } else if (slotId >= 3 && slotId < 30) {
-                    if (!this.insertItem(itemstack1, 30, 39, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (slotId >= 30 && slotId < 39 && !this.insertItem(itemstack1, 3, 30, false)) {
+            } else if (slotId != 0 && slotId != 1) {
+                // Move items from player inventory to slot 0 or 1, preferring 0
+                if (!this.insertItem(itemstack1, 0, 1, false) && !this.insertItem(itemstack1, 1, 2, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(itemstack1, 3, 39, false)) {
-                return ItemStack.EMPTY;
+            } else {
+                // Move items from slot 0 or 1 to player inventory
+                if (!this.insertItem(itemstack1, 3, 39, false)) {
+                    return ItemStack.EMPTY;
+                }
             }
 
             slot.onTakeItem(player, itemstack1);

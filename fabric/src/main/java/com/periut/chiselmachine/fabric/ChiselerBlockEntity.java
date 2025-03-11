@@ -82,7 +82,7 @@ public class ChiselerBlockEntity extends LockableContainerBlockEntity implements
 
     @Override
     public int[] getAvailableSlots(Direction side) {
-        return new int[]{0,1};
+        return new int[]{0,1,2};
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ChiselerBlockEntity extends LockableContainerBlockEntity implements
 
     @Override
     public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-        return slot == 1;
+        return slot == 2;
     }
 
     @Override
@@ -148,8 +148,12 @@ public class ChiselerBlockEntity extends LockableContainerBlockEntity implements
         if (world.isClient)
             return;
 
-        ItemStack templateBlock = (ItemStack)blockEntity.inventory.get(1);
         ItemStack blockToChisel = (ItemStack)blockEntity.inventory.get(0);
+        if (blockToChisel.isEmpty()) {
+            blockEntity.makeTimeSpent = 0;
+            return;
+        }
+        ItemStack templateBlock = (ItemStack)blockEntity.inventory.get(1);
         ItemStack output = (ItemStack)blockEntity.inventory.get(2);
 
         if ((output.getItem() == templateBlock.getItem() || output.isEmpty()) && output.getCount() < output.getMaxCount()) {
@@ -171,7 +175,12 @@ public class ChiselerBlockEntity extends LockableContainerBlockEntity implements
                 } else {
                     blockEntity.makeTimeSpent = 0;
                 }
+            } else {
+                blockEntity.makeTimeSpent = 0;
             }
+        }
+        else {
+            blockEntity.makeTimeSpent = 0;
         }
     }
 }
