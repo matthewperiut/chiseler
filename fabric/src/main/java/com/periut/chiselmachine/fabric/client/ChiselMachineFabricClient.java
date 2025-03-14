@@ -1,7 +1,7 @@
 package com.periut.chiselmachine.fabric.client;
 
-import com.periut.chiselmachine.fabric.ChiselMachineBlocks;
-import com.periut.chiselmachine.fabric.ChiselerScreen;
+import com.periut.chiselmachine.ChiselMachineBlocks;
+import com.periut.chiselmachine.ChiselerScreen;
 import com.periut.chiselmachine.fabric.ChiselMachineFabric;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;

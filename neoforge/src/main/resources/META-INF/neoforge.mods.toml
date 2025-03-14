@@ -27,5 +27,10 @@ versionRange = "[1.21.4,)"
 ordering = "NONE"
 side = "BOTH"
 
+[[dependencies.chiselmachine]]
+modId="chisel"
+type="required"
+versionRange="[2.0.0,)"
+
 [[mixins]]
 config = "chiselmachine.mixins.json"

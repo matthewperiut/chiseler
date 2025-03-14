@@ -1,18 +1,17 @@
-package com.periut.chiselmachine.fabric;
+package com.periut.chiselmachine;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.registry.Registries;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ItemScatterer;
@@ -46,7 +45,7 @@ public class ChiselerBlock extends BlockWithEntity {
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new ChiselerBlockEntity(pos, state);
+        return ChiselerUtil.createBlockEntity(pos, state);
     }
 
     protected void openScreen(World world, BlockPos pos, PlayerEntity player) {
@@ -80,8 +79,11 @@ public class ChiselerBlock extends BlockWithEntity {
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        // Make sure to check world.isClient if you only want to tick only on serverside.
-        return validateTicker(type, ChiselMachineFabric.CHISELER_BLOCK_ENTITY, ChiselerBlockEntity::tick);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return validateTicker(
+                type,
+                (BlockEntityType<ChiselerBlockEntity>) Registries.BLOCK_ENTITY_TYPE.get(ChiselMachine.CHISELER_ID),
+                ChiselerBlockEntity::tick
+        );
     }
 }

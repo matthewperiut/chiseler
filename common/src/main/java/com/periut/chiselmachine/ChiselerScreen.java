@@ -1,10 +1,9 @@
-package com.periut.chiselmachine.fabric;
+package com.periut.chiselmachine;
 
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.AbstractFurnaceScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -51,7 +50,7 @@ public class ChiselerScreen extends HandledScreen<ChiselerScreenHandler> {
     }
 
     public List<Text> getEnergyText() {
-        return List.of(Text.of(handler.getEnergy() + " RF / " + handler.getMaxEnergy() + " RF"));
+        return List.of(Text.of(handler.getEnergy() + "/" + handler.getMaxEnergy() + " E"));
     }
 
     @Override

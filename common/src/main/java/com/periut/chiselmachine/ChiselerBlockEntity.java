@@ -1,9 +1,8 @@
-package com.periut.chiselmachine.fabric;
+package com.periut.chiselmachine;
 
-import com.matthewperiut.chisel.block.ChiselGroupLookup;
+import com.periut.chisel.block.ChiselGroupLookup;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
-import net.minecraft.client.gui.screen.ingame.FurnaceScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
@@ -21,11 +20,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import team.reborn.energy.api.base.SimpleEnergyStorage;
 
 import java.util.List;
 
-public class ChiselerBlockEntity extends LockableContainerBlockEntity implements NamedScreenHandlerFactory, SidedInventory {
+public abstract class ChiselerBlockEntity extends LockableContainerBlockEntity implements NamedScreenHandlerFactory, SidedInventory {
     public static final int ENERGY_CAPCITY_PROPERTY_INDEX = 0;
     public static final int ENERGY_AMOUNT_PROPERTY_INDEX = 1;
     public static final int MAKE_TIME_PROPERTY_INDEX = 2;
@@ -35,27 +33,24 @@ public class ChiselerBlockEntity extends LockableContainerBlockEntity implements
     int makeTimeSpent = 0;
     int makeTotalTime = 12;
 
-    public final SimpleEnergyStorage energyStorage = new SimpleEnergyStorage(1000, 50, 0) {
-        @Override
-        protected void onFinalCommit() {
-            markDirty();
-        }
-    };
+    public final EnergyStorage energyStorage;
+
+    protected abstract EnergyStorage createEnergyStorage();
 
     protected DefaultedList<ItemStack> inventory;
 
     public ChiselerBlockEntity(BlockPos pos, BlockState state) {
         super(Registries.BLOCK_ENTITY_TYPE.get(ChiselMachine.CHISELER_ID), pos, state);
-        energyStorage.amount = 1000;
+        this.energyStorage = createEnergyStorage();
         this.inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
 
         this.propertyDelegate = new PropertyDelegate() {
             public int get(int index) {
                 switch (index) {
                     case ENERGY_CAPCITY_PROPERTY_INDEX:
-                        return (int) ChiselerBlockEntity.this.energyStorage.capacity;
+                        return (int) ChiselerBlockEntity.this.energyStorage.getMaxEnergy();
                     case ENERGY_AMOUNT_PROPERTY_INDEX:
-                        return (int) ChiselerBlockEntity.this.energyStorage.amount;
+                        return (int) ChiselerBlockEntity.this.energyStorage.getEnergy();
                     case MAKE_TIME_PROPERTY_INDEX:
                         return ChiselerBlockEntity.this.makeTimeSpent;
                     case MAKE_TIME_TOTAL_PROPERTY_INDEX:
@@ -67,7 +62,7 @@ public class ChiselerBlockEntity extends LockableContainerBlockEntity implements
 
             public void set(int index, int value) {
                 switch (index) {
-                    case ENERGY_AMOUNT_PROPERTY_INDEX -> ChiselerBlockEntity.this.energyStorage.amount = value;
+                    case ENERGY_AMOUNT_PROPERTY_INDEX -> ChiselerBlockEntity.this.energyStorage.setEnergy(value);
                     case MAKE_TIME_PROPERTY_INDEX -> ChiselerBlockEntity.this.makeTimeSpent = value;
                     case MAKE_TIME_TOTAL_PROPERTY_INDEX -> ChiselerBlockEntity.this.makeTotalTime = value;
                 }
@@ -132,7 +127,7 @@ public class ChiselerBlockEntity extends LockableContainerBlockEntity implements
         Inventories.readNbt(nbt, this.inventory, registries);
         this.makeTimeSpent = nbt.getInt("make_time_spent");
         this.makeTotalTime = nbt.getInt("make_total_time");
-        this.energyStorage.amount = nbt.getLong("energy_amount");
+        this.energyStorage.setEnergy(nbt.getLong("energy_amount"));
     }
 
     @Override
@@ -141,7 +136,7 @@ public class ChiselerBlockEntity extends LockableContainerBlockEntity implements
         Inventories.writeNbt(nbt, this.inventory, registries);
         nbt.putInt("make_time_spent", makeTimeSpent);
         nbt.putInt("make_total_time", makeTotalTime);
-        nbt.putLong("energy_amount", energyStorage.amount);
+        nbt.putLong("energy_amount", energyStorage.getEnergy());
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, ChiselerBlockEntity blockEntity) {
@@ -159,8 +154,8 @@ public class ChiselerBlockEntity extends LockableContainerBlockEntity implements
         if ((output.getItem() == templateBlock.getItem() || output.isEmpty()) && output.getCount() < output.getMaxCount()) {
             List<Item> relatedBlocks = ChiselGroupLookup.getBlocksInGroup(templateBlock.getItem());
             if (relatedBlocks.contains(blockToChisel.getItem())) {
-                if (blockEntity.energyStorage.amount >= 1) {
-                    blockEntity.energyStorage.amount -= 1;
+                if (blockEntity.energyStorage.getEnergy() >= 1) {
+                    blockEntity.energyStorage.insertEnergy(-1);
                     blockEntity.makeTimeSpent += 1;
                     if (blockEntity.makeTimeSpent > blockEntity.makeTotalTime) {
                         blockToChisel.decrement(1);

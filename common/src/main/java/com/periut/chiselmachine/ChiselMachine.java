@@ -1,4 +1,4 @@
-package com.periut.chiselmachine.fabric;
+package com.periut.chiselmachine;
 
 import net.minecraft.util.Identifier;
 
