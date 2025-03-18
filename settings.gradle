@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'chiselmachine'
+rootProject.name = 'chiseler'
 
 include 'common'
 include 'fabric'

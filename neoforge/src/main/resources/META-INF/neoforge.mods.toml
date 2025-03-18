@@ -1,36 +1,33 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
-#issueTrackerURL = ""
-license = "Insert License Here"
+issueTrackerURL = "https://github.com/matthewperiut/chiseler/issues"
+license = "MIT"
 
 [[mods]]
-modId = "chiselmachine"
+modId = "chiseler"
 version = "${version}"
-displayName = "Chisel Machine"
-authors = "Me!"
+displayName = "Chiseler"
+authors = "slainlight"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+Adds a machine to chisel blocks for you
 '''
-#logoFile = ""
+logoFile = "assets/chiseler/logo.png"
 
-[[dependencies.chiselmachine]]
+[[dependencies.chiseler]]
 modId = "neoforge"
 type = "required"
 versionRange = "[21.4,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.chiselmachine]]
+[[dependencies.chiseler]]
 modId = "minecraft"
 type = "required"
 versionRange = "[1.21.4,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.chiselmachine]]
+[[dependencies.chiseler]]
 modId="chisel"
 type="required"
 versionRange="[2.0.0,)"
-
-[[mixins]]
-config = "chiselmachine.mixins.json"

@@ -1,9 +1,0 @@
-{
-	"parent": "minecraft:block/orientable",
-	"textures": {
-		"bottom": "chiselmachine:block/chiseler_bottom",
-		"front": "chiselmachine:block/chiseler_front",
-		"side": "chiselmachine:block/chiseler_side",
-		"top": "chiselmachine:block/chiseler_top"
-	}
-}

@@ -7,10 +7,19 @@ plugins {
 architectury {
     minecraft = project.minecraft_version
 }
+def createVersionString() {
+    def builder = new StringBuilder()
+
+    builder.append(mod_version)
+
+    builder.append('+mc').append(minecraft_version)
+
+    return builder.toString()
+}
 
 allprojects {
+    version = createVersionString()
     group = rootProject.maven_group
-    version = rootProject.mod_version
 }
 
 subprojects {
@@ -24,12 +33,6 @@ subprojects {
     }
 
     repositories {
-        // Add repositories to retrieve artifacts from in here.
-        // You should only use this when depending on other mods because
-        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-        // for more information about repositories.
-//        maven { url = "https://maven.periut.com/" }
         exclusiveContent {
             forRepository {
                 maven {
@@ -63,6 +66,7 @@ subprojects {
             modImplementation("maven.modrinth:architectury-api:15.0.3+fabric")
             modImplementation("maven.modrinth:cryonicconfig:fabric-1.21.4-1.0.0")
         } else {
+            modImplementation("maven.modrinth:cryonicconfig:fabric-1.21.4-1.0.0")
             modImplementation("maven.modrinth:chisel-reborn:fabric-1.21.4-2.0.0")
         }
     }

@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "chiselmachine:block/chiseler" },
-    "facing=east":  { "model": "chiselmachine:block/chiseler", "y":  90 },
-    "facing=south": { "model": "chiselmachine:block/chiseler", "y": 180 },
-    "facing=west":  { "model": "chiselmachine:block/chiseler", "y": 270 }
-  }
-}
