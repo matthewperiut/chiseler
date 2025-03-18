@@ -15,12 +15,12 @@ import java.util.function.Function;
 public class ChiselerBlocks {
 	private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean shouldRegisterItem) {
 		RegistryKey<Block> blockKey = keyOfBlock(name);
-		Block block = blockFactory.apply(settings.registryKey(blockKey));
+		Block block = blockFactory.apply(settings);
 
 		if (shouldRegisterItem) {
 			RegistryKey<Item> itemKey = keyOfItem(name);
 
-			BlockItem blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey));
+			BlockItem blockItem = new BlockItem(block, new Item.Settings());
 			Registry.register(Registries.ITEM, itemKey, blockItem);
 		}
 

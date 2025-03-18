@@ -6,9 +6,15 @@
         "iri"
     ],
     "key": {
-        "i": "minecraft:iron_ingot",
-        "r": "minecraft:redstone",
-        "c": "chisel:chisel"
+        "i": {
+            "item": "minecraft:iron_ingot"
+        },
+        "r": {
+            "item": "minecraft:redstone"
+        },
+        "c": {
+            "item": "chisel:chisel"
+        }
     },
     "result": {
         "id": "chiseler:chiseler",

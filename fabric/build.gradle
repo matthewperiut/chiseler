@@ -34,8 +34,8 @@ dependencies {
         transitive = false
     }
 
-    modImplementation "curse.maven:techreborn-233564:6136162"
-    modImplementation "curse.maven:reborncore-237903:6136161"
+    modImplementation "curse.maven:techreborn-233564:6237942"
+    modImplementation "curse.maven:reborncore-237903:6237941"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')

@@ -7,6 +7,7 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.ArrayPropertyDelegate;
+import net.minecraft.screen.FurnaceScreenHandler;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
@@ -36,7 +37,17 @@ public class ChiselerScreenHandler extends ScreenHandler {
                 return false;
             }
         });
-        this.addPlayerSlots(playerInventory, 8, 84);
+        // todo: adjust
+        for(int i = 0; i < 3; ++i) {
+            for(int j = 0; j < 9; ++j) {
+                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+            }
+        }
+
+        for(int i = 0; i < 9; ++i) {
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
+        }
+//        this.addPlayerSlots(playerInventory, 8, 84);
         this.addProperties(propertyDelegate);
     }
 

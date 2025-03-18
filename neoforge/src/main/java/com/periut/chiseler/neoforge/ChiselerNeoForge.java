@@ -44,19 +44,21 @@ public final class ChiselerNeoForge {
 
     public static final Supplier<ScreenHandlerType<ChiselerScreenHandler>> CHISELER_SCREEN_HANDLER = SCREEN_HANDLER_TYPES.register("chiseler", () -> new ScreenHandlerType<>(ChiselerScreenHandler::new, FeatureFlags.VANILLA_FEATURES));
 
-    public static final DeferredBlock<Block> CHISELER_BLOCK = BLOCKS.register("chiseler", registryName -> new ChiselerBlock(AbstractBlock.Settings.create().hardness(3.F).resistance(3.F).registryKey(RegistryKey.of(RegistryKeys.BLOCK, CHISELER_ID))));
+    public static final DeferredBlock<Block> CHISELER_BLOCK = BLOCKS.register("chiseler", registryName -> new ChiselerBlock(AbstractBlock.Settings.create().hardness(3.F).resistance(3.F)));
     public static final DeferredItem<BlockItem> CHISELER_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("chiseler", CHISELER_BLOCK);
 
     public static final Supplier<BlockEntityType<NeoForgeChiselerBlockEntity>> CHISELER_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register(
             "chiseler",
-            // The block entity type.
-            () -> new BlockEntityType<>(
-                    // The supplier to use for constructing the block entity instances.
-                    NeoForgeChiselerBlockEntity::new,
-                    // A vararg of blocks that can have this block entity.
-                    // This assumes the existence of the referenced blocks as DeferredBlock<Block>s.
-                    CHISELER_BLOCK.get()
-            )
+            // The block entity type, created using a builder.
+            () -> BlockEntityType.Builder.create(
+                            // The supplier to use for constructing the block entity instances.
+                            NeoForgeChiselerBlockEntity::new,
+                            // A vararg of blocks that can have this block entity.
+                            // This assumes the existence of the referenced blocks as DeferredBlock<Block>s.
+                            CHISELER_BLOCK.get()
+                    )
+                    // Build using null; vanilla does some datafixer shenanigans with the parameter that we don't need.
+                    .build(null)
     );
 
     public ChiselerNeoForge(IEventBus modEventBus, ModContainer modContainer) {

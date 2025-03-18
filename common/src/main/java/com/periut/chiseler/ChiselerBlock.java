@@ -2,6 +2,7 @@ package com.periut.chiseler;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -85,5 +86,10 @@ public class ChiselerBlock extends BlockWithEntity {
                 (BlockEntityType<ChiselerBlockEntity>) Registries.BLOCK_ENTITY_TYPE.get(Chiseler.CHISELER_ID),
                 ChiselerBlockEntity::tick
         );
+    }
+
+    @Override
+    protected BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 }
