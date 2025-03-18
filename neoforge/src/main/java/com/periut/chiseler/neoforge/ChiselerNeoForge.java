@@ -9,6 +9,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderLayers;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -26,6 +27,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -70,6 +72,7 @@ public final class ChiselerNeoForge {
         SCREEN_HANDLER_TYPES.register(modEventBus);
 
         modEventBus.addListener(this::registerCapabilities);
+        modEventBus.addListener(this::buildContents);
     }
 
 
@@ -85,7 +88,12 @@ public final class ChiselerNeoForge {
         );
     }
 
-
+    public void buildContents(BuildCreativeModeTabContentsEvent event) {
+        // Is this the tab we want to add to?
+        if (event.getTabKey() == ItemGroups.REDSTONE) {
+            event.add(CHISELER_BLOCK_ITEM);
+        }
+    }
 
     @EventBusSubscriber(modid = Chiseler.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
