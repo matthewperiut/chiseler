@@ -12,6 +12,9 @@
 ## Chisel blocks in a custom machine GUI
 ![Chiseler GUI](logo/gui.png)
 
+## Recipe
+![Chiseler Recipe](logo/recipe.png)
+
 ## Use hoppers or item pipes to transfer in and out of machine
 and bob's your uncle!  
 (That's all)  
