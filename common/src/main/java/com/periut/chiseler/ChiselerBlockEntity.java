@@ -125,9 +125,9 @@ public abstract class ChiselerBlockEntity extends LockableContainerBlockEntity i
         super.readNbt(nbt, registries);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
         Inventories.readNbt(nbt, this.inventory, registries);
-        this.makeTimeSpent = nbt.getInt("make_time_spent");
-        this.makeTotalTime = nbt.getInt("make_total_time");
-        this.energyStorage.setEnergy(nbt.getLong("energy_amount"));
+        this.makeTimeSpent = nbt.getInt("make_time_spent").orElse(0);
+        this.makeTotalTime = nbt.getInt("make_total_time").orElse(Chiseler.energyPerBlock);
+        this.energyStorage.setEnergy(nbt.getLong("energy_amount").orElse(0L));
 
         makeTotalTime = Chiseler.energyPerBlock;
     }
