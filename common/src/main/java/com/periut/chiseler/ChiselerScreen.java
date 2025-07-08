@@ -1,5 +1,6 @@
 package com.periut.chiseler;
 
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.RenderLayer;
@@ -31,15 +32,15 @@ public class ChiselerScreen extends HandledScreen<ChiselerScreenHandler> {
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
         int size = MathHelper.ceil(((ChiselerScreenHandler)this.handler).getCookProgress() * 24.0F);
-        context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x, y, 0.0F, 0.0F, this.backgroundWidth, this.backgroundHeight, 256, 256);
-        context.drawGuiTexture(RenderLayer::getGuiTextured, BURN_PROGRESS_TEXTURE, 24, 16, 0, 0, this.x + 76, this.y + 35, size, 16);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0.0F, 0.0F, this.backgroundWidth, this.backgroundHeight, 256, 256);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, BURN_PROGRESS_TEXTURE, 24, 16, 0, 0, this.x + 76, this.y + 35, size, 16);
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
         float energyDiff = (1 - ((float) handler.getEnergy() / handler.getMaxEnergy())) * 48;
-        context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x + 10, y + 19 + (int)energyDiff, 177F, 0.0F, 12, 48 - (int)energyDiff, 256, 256);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x + 10, y + 19 + (int)energyDiff, 177F, 0.0F, 12, 48 - (int)energyDiff, 256, 256);
 
         drawMouseoverTooltip(context, mouseX, mouseY);
         if (mouseX > 134 && mouseX < 147) {

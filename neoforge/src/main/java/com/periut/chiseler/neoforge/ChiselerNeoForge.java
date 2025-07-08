@@ -92,19 +92,4 @@ public final class ChiselerNeoForge {
             event.add(CHISELER_BLOCK_ITEM);
         }
     }
-
-    @EventBusSubscriber(modid = Chiseler.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
-            RenderLayers.setRenderLayer(CHISELER_BLOCK.get(), RenderLayer.getCutout());
-        }
-
-        @SubscribeEvent
-        public static void registerScreens(RegisterMenuScreensEvent event) {
-            event.register(CHISELER_SCREEN_HANDLER.get(), ChiselerScreen::new);
-        }
-    }
 }

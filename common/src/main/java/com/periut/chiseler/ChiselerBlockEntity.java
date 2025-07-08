@@ -1,8 +1,12 @@
 package com.periut.chiseler;
 
 import com.periut.chisel.block.ChiselGroupLookup;
+import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.FurnaceBlockEntity;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
+import net.minecraft.client.gui.screen.ingame.AbstractFurnaceScreen;
+import net.minecraft.component.ComponentsAccess;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
@@ -11,9 +15,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.screen.AbstractFurnaceScreenHandler;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -22,6 +29,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class ChiselerBlockEntity extends LockableContainerBlockEntity implements NamedScreenHandlerFactory, SidedInventory {
     public static final int ENERGY_CAPCITY_PROPERTY_INDEX = 0;
@@ -121,24 +129,23 @@ public abstract class ChiselerBlockEntity extends LockableContainerBlockEntity i
     }
 
     @Override
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.readNbt(nbt, registries);
+    protected void readData(ReadView view) {
+        super.readData(view);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-        Inventories.readNbt(nbt, this.inventory, registries);
-        this.makeTimeSpent = nbt.getInt("make_time_spent").orElse(0);
-        this.makeTotalTime = nbt.getInt("make_total_time").orElse(Chiseler.energyPerBlock);
-        this.energyStorage.setEnergy(nbt.getLong("energy_amount").orElse(0L));
-
+        Inventories.readData(view, this.inventory);
+        this.makeTimeSpent = view.getInt("make_time_spent", 0);
+        this.makeTotalTime = view.getInt("make_total_time", Chiseler.energyPerBlock);
+        this.energyStorage.setEnergy(view.getLong("energy_amount", 0L));
         makeTotalTime = Chiseler.energyPerBlock;
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.writeNbt(nbt, registries);
-        Inventories.writeNbt(nbt, this.inventory, registries);
-        nbt.putInt("make_time_spent", makeTimeSpent);
-        nbt.putInt("make_total_time", makeTotalTime);
-        nbt.putLong("energy_amount", energyStorage.getEnergy());
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        Inventories.writeData(view, this.inventory);
+        view.putInt("make_time_spent", makeTimeSpent);
+        view.putInt("make_total_time", makeTotalTime);
+        view.putLong("energy_amount", energyStorage.getEnergy());
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, ChiselerBlockEntity blockEntity) {
